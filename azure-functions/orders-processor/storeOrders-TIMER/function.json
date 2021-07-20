@@ -1,0 +1,15 @@
+{
+  "bindings" : [ {
+    "type": "timerTrigger",
+    "name": "timerInfo",
+    "direction": "in",
+    "schedule": "0/1 * * * * *"
+  }, {
+    "type" : "cosmosDB",
+    "direction" : "out",
+    "name" : "databaseOutput",
+    "databaseName" : "AppStore",
+    "connectionStringSetting" : "CosmosDBConnectionString",
+    "collectionName" : "orders"
+  } ]
+}

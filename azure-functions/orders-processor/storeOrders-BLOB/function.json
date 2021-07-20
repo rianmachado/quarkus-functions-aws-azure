@@ -1,0 +1,17 @@
+{
+  "bindings" : [ {
+    "type" : "blobTrigger",
+    "direction" : "in",
+    "name" : "triggerBlob",
+    "path" : "arsenal/{name}",
+    "dataType" : "binary",
+    "connection" : "AzureWebJobsStorage"
+  }, {
+    "type" : "cosmosDB",
+    "direction" : "out",
+    "name" : "databaseOutput",
+    "databaseName" : "AppStore",
+    "connectionStringSetting" : "CosmosDBConnectionString",
+    "collectionName" : "orders"
+  } ]
+}

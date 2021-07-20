@@ -1,0 +1,17 @@
+{
+  "bindings" : [ {
+    "type" : "eventHubTrigger",
+    "direction" : "in",
+    "name" : "orders",
+    "connection" : "EventHubConnectionString",
+    "eventHubName" : "",
+    "cardinality" : "ONE"
+  }, {
+    "type" : "cosmosDB",
+    "direction" : "out",
+    "name" : "databaseOutput",
+    "databaseName" : "AppStore",
+    "connectionStringSetting" : "CosmosDBConnectionString",
+    "collectionName" : "orders"
+  } ]
+}
