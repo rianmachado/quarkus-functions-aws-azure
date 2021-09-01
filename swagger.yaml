@@ -1,0 +1,140 @@
+swagger: "2.0"
+info:
+  description: "API utilizada para contratação dos produtos consorcio e seguros"
+  version: "1.0.0"
+  title: "Contratação de produtos"
+  termsOfService: "http://pagamentos.com.br/terms/"
+  contact:
+    email: "rianmachado@gmail.com"
+  
+host: "pagamentos.com.br"
+basePath: "/v1"
+tags:
+- name: "contrato"
+  description: "Tudo sobre seus contratos"
+schemes:
+- "https"
+- "http"
+paths:
+ /contrato:
+    post:
+      tags:
+      - "contrato"
+      summary: "Add a new contrato to the store"
+      description: ""
+      operationId: "addContrato"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Contrato object that needs to be added to the store"
+        required: true
+        schema:
+          $ref: "#/definitions/ProductContractModel"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: Retorna a confirmação da contratação
+          schema:
+            $ref: '#/definitions/TransactionModel'          
+ /contrato/authorizePayment:
+    post:
+      tags:
+      - "contrato"
+      summary: "Autoriza pagamento"
+      description: ""
+      operationId: "autorizaPagamentos"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Atualiza o status da transação para processamento de pagamentos"
+        required: true
+        schema:
+          $ref: "#/definitions/PagamentoModel"
+      responses:
+        "405":
+          description: "Invalid input"
+        "200":
+          description: Retorna a confirmação da autorização de pagamento
+
+definitions:
+  ProductContractModel:
+    type: "object"
+    required:
+    - "customerName"
+    - "expirationDate"
+    - "cardNumber"
+    - "securityCode"
+    - "customerId"
+    - "installments"
+    properties:
+      customerName:
+        type: "string"
+      expirationDate:
+        type: "string"
+        example: "2017-01-01"
+        format: date
+        pattern: "YYYY-MM-DD"
+      cardNumber:
+        type: "integer"
+        format: "int64"
+        minLength: 16
+        maxLength: 16
+      securityCode:
+        type: "integer"
+        format: "int64"
+        minLength: 3
+        maxLength: 3
+      installments:
+        type: "integer"
+        format: "int64"
+        minLength: 1
+        maxLength: 1
+      product:
+        type: array
+        items:
+            type: string
+            enum:
+              - SEGURO
+              - CONSORCIO
+    xml:
+      name: "ProductContractModel"
+  
+  TransactionModel:
+    type: "object"
+    properties:
+      transactionId:
+        type: "integer"
+        format: "int64"
+      cardId:
+        type: "integer"
+        format: "int64"
+      customerId:
+        type: "integer"
+        format: "int64"
+    xml:
+      name: "TransactionModel"
+      
+  PagamentoModel:
+    type: "object"
+    properties:
+      transactionId:
+        type: "integer"
+        format: "int64"
+      cardId:
+        type: "integer"
+        format: "int64"
+      customerId:
+        type: "integer"
+        format: "int64"
+    xml:
+      name: "TransactionModel"
+         
